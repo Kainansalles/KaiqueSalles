@@ -218,30 +218,30 @@ hr {
 .section-title h2, .section-title.center h2 {
 	margin-bottom: 30px;
 }
-/* About Section */
-#about {
+/* sobre Section */
+#sobre {
 	padding: 140px 0;
 	background: #f6f6f6;
 }
-#about .about-text {
+#sobre .sobre-text {
 	margin-left: 10px;
 }
-#about H4 {
+#sobre H4 {
 	font-size: 20px;
 }
-#about li {
+#sobre li {
 	margin-bottom: 3px;
 	list-style: none;
 	padding: 0;
 	font-size: 13px;
 }
-#about li:before {
+#sobre li:before {
 	content: "✓";
 	font-weight: 600;
 	padding-right: 10px;
 	color: #e75926;
 }
-#about i.fa {
+#sobre i.fa {
 	float: left;
 	display: block;
 	margin-right: 15px;
@@ -249,10 +249,10 @@ hr {
 	font-size: 44px;
 	text-shadow: 0 0 1px #666;
 }
-#about img {
+#sobre img {
 	margin-top: 20px;
 }
-#about p {
+#sobre p {
 	margin-top: 20px;
 	margin-bottom: 30px;
 }

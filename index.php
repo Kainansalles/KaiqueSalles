@@ -1,4 +1,10 @@
-<?php get_header(); ?>
+<?php get_header();
+$menu = 'meu_menu_principal';
+$locations_menu = get_nav_menu_locations();
+$menu_id = $locations_menu[ $menu ] ;
+$menu = wp_get_nav_menu_items(wp_get_nav_menu_object($menu_id)->name);
+
+?>
 <div id="intro">
   <div class="intro-body">
     <div class="container">
@@ -6,29 +12,29 @@
         <div class="col-md-10 col-md-offset-1">
           <h1>We are <span class="brand-heading">Modus</span></h1>
           <p class="intro-text">A full-service digital agency that loves what we do</p>
-          <a href="#about" class="btn btn-default page-scroll">Learn More</a> </div>
+          <a href="#sobre" class="btn btn-default page-scroll">Learn More</a> </div>
       </div>
     </div>
   </div>
 </div>
-<!-- About Section -->
-<div id="about">
+<!-- sobre Section -->
+<div id="sobre">
   <div class="container">
     <div class="section-title text-center center">
-      <h2>About us</h2>
+      <h2>sobre us</h2>
       <hr>
     </div>
     <div class="row">
-      <div class="col-md-4"><img src="img/about.jpg" class="img-responsive"></div>
+      <div class="col-md-4"><img src="img/sobre.jpg" class="img-responsive"></div>
       <div class="col-md-4">
-        <div class="about-text">
+        <div class="sobre-text">
           <h4>Who We Are</h4>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor feugiat at. Duis sed dapibus leo nec ornare diam commodo nibh.</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum. </p>
         </div>
       </div>
       <div class="col-md-4">
-        <div class="about-text">
+        <div class="sobre-text">
           <h4>What We Do</h4>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor feugiat at. Duis sed dapibus leo nec ornare diam.</p>
           <ul>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 function carrega_scripts(){
 	// Enfileirando Bootstrap
@@ -18,6 +18,19 @@ function carrega_scripts(){
 	wp_enqueue_script( 'jqBootstrapValidation', get_template_directory_uri(). '/assets/js/jqBootstrapValidation.js',array(), null, true);
 	wp_enqueue_script( 'contact_me', get_template_directory_uri(). '/assets/js/contact_me.js',array(), null, true);
 	wp_enqueue_script( 'main', get_template_directory_uri(). '/assets/js/main.js',array(), null, true);
-	
+
 }
 add_action( 'wp_enqueue_scripts', 'carrega_scripts' );
+
+// Função para registro de nossos menus
+register_nav_menus(
+	array(
+		'meu_menu_principal' => 'Menu Principal'
+	)
+);
+
+function wpsites_child_theme_posts_formats(){
+		add_theme_support( 'post-thumbnails', array( 'page' ) );
+}
+add_action( 'after_setup_theme', 'wpsites_child_theme_posts_formats', 11 );
+?>

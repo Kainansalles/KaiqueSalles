@@ -15,13 +15,13 @@
 
 <!-- Stylesheet
     ================================================== -->
-<!-- 
+<!--
 <link rel="stylesheet" type="text/css"  href="css/style.css">
-<link rel="stylesheet" type="text/css" href="css/prettyPhoto.css"> 
+<link rel="stylesheet" type="text/css" href="css/prettyPhoto.css">
 -->
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
-<!-- 
-<script type="text/javascript" src="js/modernizr.custom.js"></script> 
+<!--
+<script type="text/javascript" src="js/modernizr.custom.js"></script>
 -->
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -41,22 +41,27 @@
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse"> <i class="fa fa-bars"></i> </button>
       <a class="navbar-brand page-scroll" href="#page-top"> <i class="fa fa-paper-plane-o"></i> Modus</a> </div>
-    
+
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
       <ul class="nav navbar-nav">
-        <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+        <!-- Hidden li included to remove active class from sobre link when scrolled up past sobre section -->
         <li class="hidden"> <a href="#page-top"></a> </li>
-        <li> <a class="page-scroll" href="#about">About</a> </li>
-        <li> <a class="page-scroll" href="#services">Services</a> </li>
-        <li> <a class="page-scroll" href="#works">Portfolio</a> </li>
-        <li> <a class="page-scroll" href="#team">Team</a> </li>
-        <li> <a class="page-scroll" href="#testimonials">Testimonials</a> </li>
-        <li> <a class="page-scroll" href="#contact">Contact</a> </li>
+        <?php
+          $menu = 'meu_menu_principal';
+          $locations_menu = get_nav_menu_locations();
+          $menu_id = $locations_menu[ $menu ] ;
+          $menu = wp_get_nav_menu_items(wp_get_nav_menu_object($menu_id)->name);
+
+          foreach ($menu as $key) {?>
+            <li> <a class="page-scroll" href="<?= $key->url?>"><?= $key->title?></a> </li>
+          <?php
+          }
+          ?>
       </ul>
     </div>
-    <!-- /.navbar-collapse --> 
+    <!-- /.navbar-collapse -->
   </div>
-  <!-- /.container --> 
+  <!-- /.container -->
 </nav>
 <!-- Header -->
