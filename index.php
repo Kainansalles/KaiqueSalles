@@ -3,7 +3,7 @@ $menu = 'meu_menu_principal';
 $locations_menu = get_nav_menu_locations();
 $menu_id = $locations_menu[ $menu ] ;
 $menu = wp_get_nav_menu_items(wp_get_nav_menu_object($menu_id)->name);
-var_dump($post);
+
 
 ?>
 <div id="intro">

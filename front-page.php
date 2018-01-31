@@ -9,31 +9,22 @@ $args = array(
   );
 $paginas = new WP_Query($args);
 
-if($paginas->have_posts()) :
-  $count = 0;
-    while ($paginas->have_posts()) : $paginas->the_post();
-    if ($paginas->posts[$count]->post_title == "Kaique Salles") : ?>
+?>
 
-<div id="intro" style="background-image: url(<?= get_the_post_thumbnail_url(); ?>);">
+<div id="intro" style="background-image: url(<?= get_header_image(); ?>);">
   <div class="intro-body">
     <div class="container">
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
-          <h1> <?php the_title(); ?></h1>
+          <h1><?= bloginfo('name'); ?></h1>
           <!-- <span class="brand-heading">Modus</span> -->
-          <div class="intro-text"><?php the_content(); ?></div>
+          <div class="intro-text"><?= bloginfo('description'); ?></div>
           <a href="#sobre" class="btn btn-default page-scroll">Conheça mais</a></div>
       </div>
     </div>
   </div>
 </div>
 
-<?php
-    endif;
-    $count ++;
-  endwhile;
-endif;
- ?>
 <!-- sobre Section -->
 <?php
 if($paginas->have_posts()) :
@@ -48,14 +39,14 @@ if($paginas->have_posts()) :
       <hr>
     </div>
     <div class="row">
-      <div class="col-md-6"> <?php the_post_thumbnail("shop_thumbnail", array("class" => "img-responsive")) ?></div>
-      <div class="col-md-6">
+      <div class="col-md-4"> <?php the_post_thumbnail("shop_thumbnail", array("class" => "img-responsive")) ?></div>
+      <div class="col-md-4">
         <div class="sobre-text">
           <!-- <h4>Who We Are</h4> -->
           <?php the_content(); ?>
         </div>
       </div>
-      <!-- <div class="col-md-4">
+      <div class="col-md-4">
         <div class="sobre-text">
           <h4>What We Do</h4>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor feugiat at. Duis sed dapibus leo nec ornare diam.</p>
@@ -66,7 +57,7 @@ if($paginas->have_posts()) :
             <li>Sed commodo nibh ante bibendum</li>
           </ul>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </div>
