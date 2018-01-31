@@ -3,38 +3,59 @@ $menu = 'meu_menu_principal';
 $locations_menu = get_nav_menu_locations();
 $menu_id = $locations_menu[ $menu ] ;
 $menu = wp_get_nav_menu_items(wp_get_nav_menu_object($menu_id)->name);
-var_dump($post);
 
-?>
-<div id="intro">
+$args = array(
+    'post_type' 		 => 'page'
+  );
+$paginas = new WP_Query($args);
+
+if($paginas->have_posts()) :
+  $count = 0;
+    while ($paginas->have_posts()) : $paginas->the_post();
+    if ($paginas->posts[$count]->post_title == "Kaique Salles") : ?>
+
+<div id="intro" style="background-image: url(<?= get_the_post_thumbnail_url(); ?>);">
   <div class="intro-body">
     <div class="container">
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
-          <h1>We are <span class="brand-heading">Modus</span></h1>
-          <p class="intro-text">A full-service digital agency that loves what we do</p>
-          <a href="#sobre" class="btn btn-default page-scroll">Learn More</a> </div>
+          <h1> <?php the_title(); ?></h1>
+          <!-- <span class="brand-heading">Modus</span> -->
+          <div class="intro-text"><?php the_content(); ?></div>
+          <a href="#sobre" class="btn btn-default page-scroll">Conheça mais</a></div>
       </div>
     </div>
   </div>
 </div>
+
+<?php
+    endif;
+    $count ++;
+  endwhile;
+endif;
+ ?>
 <!-- sobre Section -->
+<?php
+if($paginas->have_posts()) :
+  $count = 0;
+  while ($paginas->have_posts()) : $paginas->the_post();
+    if ($paginas->posts[$count]->post_title == "Sobre") : ?>
+
 <div id="<?= $menu[0]->post_name ?>">
   <div class="container">
     <div class="section-title text-center center">
-      <h2>sobre us</h2>
+      <h2><?= $paginas->posts[$count]->post_title; ?></h2>
       <hr>
     </div>
     <div class="row">
-      <div class="col-md-4"><img src="img/sobre.jpg" class="img-responsive"></div>
-      <div class="col-md-4">
+      <div class="col-md-6"> <?php the_post_thumbnail("shop_thumbnail", array("class" => "img-responsive")) ?></div>
+      <div class="col-md-6">
         <div class="sobre-text">
-          <h4>Who We Are</h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor feugiat at. Duis sed dapibus leo nec ornare diam commodo nibh.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum. </p>
+          <!-- <h4>Who We Are</h4> -->
+          <?php the_content(); ?>
         </div>
       </div>
-      <div class="col-md-4">
+      <!-- <div class="col-md-4">
         <div class="sobre-text">
           <h4>What We Do</h4>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor feugiat at. Duis sed dapibus leo nec ornare diam.</p>
@@ -45,10 +66,16 @@ var_dump($post);
             <li>Sed commodo nibh ante bibendum</li>
           </ul>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
+<?php
+    endif;
+    $count ++;
+  endwhile;
+endif;
+ ?>
 <!-- Services Section -->
 <div id="services" class="text-center">
   <div class="container">

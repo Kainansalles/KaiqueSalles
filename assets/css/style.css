@@ -162,7 +162,7 @@ hr {
 	padding: 100px 0;
 	text-align: center;
 	color: #fff;
-	background: url(../img/intro-bg.jpg) no-repeat center center fixed;
+	/* background: url(../img/intro-bg.jpg) no-repeat center center fixed; */
 	background-color: #000;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -183,7 +183,8 @@ hr {
 	color: #E75926;
 	text-shadow: 0 4px #a13e1a;
 }
-#intro .intro-body .intro-text {
+#intro .intro-body .intro-text,
+#intro .intro-body .intro-text p {
 	font-size: 18px;
 }
 
@@ -192,7 +193,8 @@ hr {
 	height: 100%;
 	padding: 0;
 }
-#intro .intro-body .intro-text {
+#intro .intro-body .intro-text,
+#intro .intro-body .intro-text p {
 	font-size: 18px;
 	letter-spacing: 1px;
 	margin-bottom: 100px;
