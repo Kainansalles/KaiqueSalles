@@ -4,34 +4,46 @@ $locations_menu = get_nav_menu_locations();
 $menu_id = $locations_menu[ $menu ] ;
 $menu = wp_get_nav_menu_items(wp_get_nav_menu_object($menu_id)->name);
 
+$args = array(
+    'post_type'      => 'page'
+  );
+$paginas = new WP_Query($args);
 
 ?>
-<div id="intro">
+
+<div id="intro" style="background-image: url(<?= get_header_image(); ?>);">
   <div class="intro-body">
     <div class="container">
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
-          <h1>We are <span class="brand-heading">Modus</span></h1>
-          <p class="intro-text">A full-service digital agency that loves what we do</p>
-          <a href="#sobre" class="btn btn-default page-scroll">Learn More</a> </div>
+          <h1><?= bloginfo('name'); ?></h1>
+          <!-- <span class="brand-heading">Modus</span> -->
+          <div class="intro-text"><?= bloginfo('description'); ?></div>
+          <a href="#sobre" class="btn btn-default page-scroll">Conheça mais</a></div>
       </div>
     </div>
   </div>
 </div>
+
 <!-- sobre Section -->
+<?php
+if($paginas->have_posts()) :
+  $count = 0;
+  while ($paginas->have_posts()) : $paginas->the_post();
+    if ($paginas->posts[$count]->post_title == "Sobre") : ?>
+
 <div id="<?= $menu[0]->post_name ?>">
   <div class="container">
     <div class="section-title text-center center">
-      <h2>sobre us</h2>
+      <h2><?= $paginas->posts[$count]->post_title; ?></h2>
       <hr>
     </div>
     <div class="row">
-      <div class="col-md-4"><img src="img/sobre.jpg" class="img-responsive"></div>
+      <div class="col-md-4"> <?php the_post_thumbnail("shop_thumbnail", array("class" => "img-responsive")) ?></div>
       <div class="col-md-4">
         <div class="sobre-text">
-          <h4>Who We Are</h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor feugiat at. Duis sed dapibus leo nec ornare diam commodo nibh.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum. </p>
+          <!-- <h4>Who We Are</h4> -->
+          <?php the_content(); ?>
         </div>
       </div>
       <div class="col-md-4">
@@ -49,8 +61,23 @@ $menu = wp_get_nav_menu_items(wp_get_nav_menu_object($menu_id)->name);
     </div>
   </div>
 </div>
+<?php
+    endif;
+    $count ++;
+  endwhile;
+endif;
+ ?>
+
+ <?php 
+  $args = array(
+      'post_type'      => 'post_servicos',
+      'posts_per_page' => -1
+    );
+  $servicos = new WP_Query($args);
+
+  ?>
 <!-- Services Section -->
-<div id="services" class="text-center">
+<div id="servicos" class="text-center">
   <div class="container">
     <div class="section-title center">
       <h2>Our Services</h2>
@@ -58,57 +85,22 @@ $menu = wp_get_nav_menu_items(wp_get_nav_menu_object($menu_id)->name);
     </div>
     <div class="space"></div>
     <div class="row">
+      <?php 
+        if($servicos->have_posts()) :
+            while ($servicos->have_posts()) : $servicos->the_post();
+      ?>
       <div class="col-md-3 col-sm-6">
-        <div class="service"> <i class="fa fa-desktop"></i>
-          <h3>Web Design</h3>
-          <p>Lorem ipsum dolor sit amet placerat facilisis felis mi in tempus eleifend pellentesque natoque etiam.</p>
+        <div class="service">
+          <?php the_post_thumbnail(array(150,150));?>
+          <h3><?php the_title(); ?></h3>
+          <?php the_content();?>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
-        <div class="service"> <i class="fa fa-cogs"></i>
-          <h3>Web Development</h3>
-          <p>Lorem ipsum dolor sit amet placerat facilisis felis mi in tempus eleifend pellentesque.</p>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6">
-        <div class="service"> <i class="fa fa-tablet"></i>
-          <h3>App Design</h3>
-          <p>Lorem ipsum dolor sit amet placerat facilisis felis mi in tempus eleifend pellentesque natoque etiam.</p>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6">
-        <div class="service"><i class="fa fa-html5"></i>
-          <h3>PSD to HTML5</h3>
-          <p>Lorem ipsum dolor sit amet placerat facilisis felis mi in tempus eleifend pellentesque natoque.</p>
-        </div>
-      </div>
-    </div>
-    <div class="space"></div>
-    <div class="row">
-      <div class="col-md-3 col-sm-6">
-        <div class="service"><i class="fa fa-wordpress"></i>
-          <h3>WordPress</h3>
-          <p>Lorem ipsum dolor sit amet placerat facilisis felis mi in tempus eleifend pellentesque natoque etiam.</p>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6">
-        <div class="service"><i class="fa fa-bullhorn"></i>
-          <h3>Marketing</h3>
-          <p>Lorem ipsum dolor sit amet placerat facilisis felis mi in tempus eleifend pellentesque.</p>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6">
-        <div class="service"><i class="fa fa-rocket"></i>
-          <h3>Branding</h3>
-          <p>Lorem ipsum dolor sit amet placerat facilisis felis mi in tempus eleifend pellentesque natoque etiam.</p>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6">
-        <div class="service"><i class="fa fa-leaf"></i>
-          <h3>Print Design</h3>
-          <p>Lorem ipsum dolor sit amet placerat facilisis felis mi in tempus eleifend pellentesque natoque.</p>
-        </div>
-      </div>
+      <?php
+        endwhile;
+      endif;
+       ?>
+
     </div>
   </div>
 </div>
@@ -220,93 +212,6 @@ $menu = wp_get_nav_menu_items(wp_get_nav_menu_object($menu_id)->name);
     </div>
   </div>
 </div>
-<!-- Team Section -->
-<div id="team" class="text-center">
-  <div class="container">
-    <div class="section-title center">
-      <h2>Meet the team</h2>
-      <hr>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diamcommodo nibh ante facilisis.</p>
-    </div>
-    <div id="row">
-      <div class="col-xs-6 col-md-3 col-sm-6">
-        <div class="thumbnail"> <img src="img/team/01.jpg" alt="..." class="img-thumbnail team-img">
-          <div class="caption">
-            <h3>John Doe</h3>
-            <p>Founder / CEO</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-xs-6 col-md-3 col-sm-6">
-        <div class="thumbnail"> <img src="img/team/02.jpg" alt="..." class="img-thumbnail team-img">
-          <div class="caption">
-            <h3>Mike Doe</h3>
-            <p>Web Designer</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-xs-6 col-md-3 col-sm-6">
-        <div class="thumbnail"> <img src="img/team/03.jpg" alt="..." class="img-thumbnail team-img">
-          <div class="caption">
-            <h3>Jane Doe</h3>
-            <p>Creative Director</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-xs-6 col-md-3 col-sm-6">
-        <div class="thumbnail"> <img src="img/team/04.jpg" alt="..." class="img-thumbnail team-img">
-          <div class="caption">
-            <h3>Larry Show</h3>
-            <p>Project Manager</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Testimonials Section -->
-<div id="testimonials" class="text-center">
-  <div class="container">
-    <div class="section-title center">
-      <h2>What our clients say</h2>
-      <hr>
-    </div>
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1">
-        <div class="row testimonials">
-          <div class="col-sm-4">
-            <blockquote><i class="fa fa-quote-left"></i>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elitduis sed dapibus leo nec ornare.</p>
-              <div class="clients-name">
-                <p><strong>John Doe</strong><br>
-                  <em>CEO, Company Inc.</em></p>
-              </div>
-            </blockquote>
-          </div>
-          <div class="col-sm-4">
-            <blockquote><i class="fa fa-quote-left"></i>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elitduis sed dapibus leo nec ornare.</p>
-              <div class="clients-name">
-                <p><strong>Jane Doe</strong><br>
-                  <em>CEO, Company Inc.</em></p>
-              </div>
-            </blockquote>
-          </div>
-          <div class="col-sm-4">
-            <blockquote><i class="fa fa-quote-left"></i>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elitduis sed dapibus leo nec ornare.</p>
-              <div class="clients-name">
-                <p><strong>Chris Smith</strong><br>
-                  <em>CEO, Company Inc.</em></p>
-              </div>
-            </blockquote>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- Contact Section -->
 <div id="contact" class="text-center">
   <div class="container">

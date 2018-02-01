@@ -258,31 +258,31 @@ hr {
 	margin-top: 20px;
 	margin-bottom: 30px;
 }
-/* Services Section */
-#services {
+/* servicos Section */
+#servicos {
 	padding: 140px 0;
-	background: url(../img/services-bg.jpg);
+	background: url(../img/servicos-bg.jpg);
 	background-size: cover;
 	background-attachment: fixed;
 }
-#services .service {
+#servicos .service {
 	padding: 20px 10px;
 }
-#services h2 {
+#servicos h2 {
 	color: #f6f6f6;
 }
-#services h3 {
+#servicos h3 {
 	font-size: 20px;
 	font-weight: 600;
 	color: #f6f6f6;
 }
-#services p {
+#servicos p {
 	color: rgba(255,255,255,0.7);
 }
 .space {
 	margin-top: 40px;
 }
-#services i.fa {
+#servicos i.fa {
 	font-size: 36px;
 	color: #E75926;
 	transition: all 0.5s;

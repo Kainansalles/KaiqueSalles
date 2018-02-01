@@ -57,6 +57,23 @@ add_theme_support( 'custom-logo', array(
 add_theme_support('post-thumbnails');
 add_theme_support('post-formats', array('video', 'image'));
 add_theme_support( 'customize-selective-refresh-widgets' );
+$defaults = array(
+    'default-image' => '',
+    'default-preset' => 'default',
+    'default-position-x' => 'left',
+    'default-position-y' => 'top',
+    'default-size' => 'auto',
+    'default-repeat' => 'repeat',
+    'default-attachment' => 'scroll',
+    'default-color' => '',
+    'wp-head-callback' => '_custom_background_cb',
+    'admin-head-callback' => '',
+    'admin-preview-callback' => '',
+);
+add_theme_support( 'custom-background', $defaults );
+add_theme_support( 'automatic-feed-links' );
+add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption' ) );
+
 
 //colocando thumbnail no post de page
 function wpsites_child_theme_posts_formats(){
