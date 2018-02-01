@@ -72,14 +72,9 @@ $defaults = array(
 );
 add_theme_support( 'custom-background', $defaults );
 add_theme_support( 'automatic-feed-links' );
-add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption' ) );
+//add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption' ) );
+add_post_type_support( 'page', 'post-formats' );
 
-
-//colocando thumbnail no post de page
-function wpsites_child_theme_posts_formats(){
-		add_theme_support( 'post-thumbnails', array( 'page' ) );
-}
-add_action( 'after_setup_theme', 'wpsites_child_theme_posts_formats', 11 );
 
 // Register Custom Post Type
 function post_servicos() {
