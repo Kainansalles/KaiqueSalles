@@ -22,6 +22,11 @@ function carrega_scripts(){
 }
 add_action( 'wp_enqueue_scripts', 'carrega_scripts' );
 
+function carregar_script_admin(){
+	wp_enqueue_script( 'template', get_template_directory_uri(). '/assets/js/template.js',array(), null, true);
+}
+add_action('admin_enqueue_scripts', 'carregar_script_admin');
+
 // Função para registro de nossos menus
 register_nav_menus(
 	array(
@@ -162,5 +167,73 @@ function register_category_servicos() {
 }
 
 add_action('init', 'register_category_servicos');
+
+function add_your_fields_meta_box() {
+	add_meta_box(
+		'your_fields_meta_box', // $id
+		'Campos necessários do tema', // $title
+		'show_your_fields_meta_box', // $callback
+		'page', // $screen
+		'normal', // $context
+		'high' // $priority
+	);
+}
+add_action( 'add_meta_boxes', 'add_your_fields_meta_box' );
+
+function show_your_fields_meta_box() {
+	global $post;
+		$meta = get_post_meta( $post->ID, 'page', true ); 	
+	?>
+
+	<input type="hidden" name="your_meta_box_nonce" value="<?php echo wp_create_nonce( basename(__FILE__) ); ?>">
+
+    <!-- All fields will go here -->
+    <?php 
+    if ($post->ID == 5) : ?>
+     
+	<p>
+		<label for="page[textarea]"></label>
+		<br>
+		<textarea name="page[textarea]" id="page[textarea]" rows="5" cols="30" style="width:500px;"><?php echo $meta['textarea']; ?></textarea>
+	</p>
+	<p>
+		<label for="page[image]">Image Upload</label><br>
+		<input type="text" name="page[image]" id="page[image]" class="meta-image regular-text" value="<?php echo $meta['image']; ?>">
+		<input type="button" class="button image-upload" value="Browse">
+	</p>
+<div class="image-preview"><img src="<?php echo $meta['image']; ?>" style="max-width: 250px;"></div>
+	<?php endif; ?>
+	<?php 
+}
+
+function save_your_fields_meta( $post_id ) {   
+	// verify nonce
+	if ( !wp_verify_nonce( $_POST['your_meta_box_nonce'], basename(__FILE__) ) ) {
+		return $post_id; 
+	}
+	// check autosave
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return $post_id;
+	}
+	// check permissions
+	if ( 'page' === $_POST['post_type'] ) {
+		if ( !current_user_can( 'edit_page', $post_id ) ) {
+			return $post_id;
+		} elseif ( !current_user_can( 'edit_post', $post_id ) ) {
+			return $post_id;
+		}  
+	}
+	
+	$old = get_post_meta( $post_id, 'page', true );
+	$new = $_POST['page'];
+
+	if ( $new && $new !== $old ) {
+		update_post_meta( $post_id, 'page', $new );
+	} elseif ( '' === $new && $old ) {
+		delete_post_meta( $post_id, 'page', $old );
+	}
+}
+add_action( 'save_post', 'save_your_fields_meta' );
+
 
 ?>

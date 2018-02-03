@@ -30,7 +30,9 @@ $paginas = new WP_Query($args);
 if($paginas->have_posts()) :
   $count = 0;
   while ($paginas->have_posts()) : $paginas->the_post();
-    if ($paginas->posts[$count]->post_title == "Sobre") : ?>
+    if ($paginas->posts[$count]->post_title == "Sobre") : 
+     ?>
+
 
 <div id="<?= $menu[0]->post_name ?>">
   <div class="container">
@@ -42,20 +44,12 @@ if($paginas->have_posts()) :
       <div class="col-md-4"> <?php the_post_thumbnail("shop_thumbnail", array("class" => "img-responsive")) ?></div>
       <div class="col-md-4">
         <div class="sobre-text">
-          <!-- <h4>Who We Are</h4> -->
           <?php the_content(); ?>
         </div>
       </div>
       <div class="col-md-4">
         <div class="sobre-text">
-          <h4>What We Do</h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor feugiat at. Duis sed dapibus leo nec ornare diam.</p>
-          <ul>
-            <li>Lorem ipsum dolor sit amet</li>
-            <li>Consectetur adipiscing commodo</li>
-            <li>Duis sed dapibus leo sed dapibus</li>
-            <li>Sed commodo nibh ante bibendum</li>
-          </ul>
+          <p><?php echo get_post_meta($paginas->posts[$count]->ID, 'page', true)['text']; ?></p>          
         </div>
       </div>
     </div>

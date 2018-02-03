@@ -1,6 +1,6 @@
 <div id="footer">
   <div class="container">
-    <p>Copyright &copy; Modus. Designed by <a href="http://www.templatewire.com" rel="nofollow">TemplateWire</a></p>
+    <p>Copyright &copy; Kaique Salles. Desenvolvido por <a href="http://kainansallesweb.com.br" rel="nofollow">Kainan Salles</a></p>
   </div>
 </div>
 
