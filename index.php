@@ -30,10 +30,8 @@ $paginas = new WP_Query($args);
 if($paginas->have_posts()) :
   $count = 0;
   while ($paginas->have_posts()) : $paginas->the_post();
-    if ($paginas->posts[$count]->post_title == "Sobre") : 
+    if ($paginas->posts[$count]->post_title == "Sobre") :
      ?>
-
-
 <div id="<?= $menu[0]->post_name ?>">
   <div class="container">
     <div class="section-title text-center center">
@@ -49,7 +47,7 @@ if($paginas->have_posts()) :
       </div>
       <div class="col-md-4">
         <div class="sobre-text">
-          <p><?php echo get_post_meta($paginas->posts[$count]->ID, 'page', true)['text']; ?></p>          
+          <p><?php echo get_post_meta($paginas->posts[$count]->ID, 'page', true)['textarea']; ?></p>
         </div>
       </div>
     </div>
@@ -62,7 +60,7 @@ if($paginas->have_posts()) :
 endif;
  ?>
 
- <?php 
+ <?php
   $args = array(
       'post_type'      => 'post_servicos',
       'posts_per_page' => -1
@@ -70,16 +68,17 @@ endif;
   $servicos = new WP_Query($args);
 
   ?>
+
 <!-- Services Section -->
-<div id="servicos" class="text-center">
+<div id="servicos" style="background-image:url(<?php echo wp_get_attachment_url(get_theme_mod('set_servicos')); ?>);" class="text-center">
   <div class="container">
     <div class="section-title center">
-      <h2>Our Services</h2>
+      <h2>Serviços</h2>
       <hr>
     </div>
     <div class="space"></div>
     <div class="row">
-      <?php 
+      <?php
         if($servicos->have_posts()) :
             while ($servicos->have_posts()) : $servicos->the_post();
       ?>

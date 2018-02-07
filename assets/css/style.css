@@ -261,7 +261,7 @@ hr {
 /* servicos Section */
 #servicos {
 	padding: 140px 0;
-	background: url(../img/servicos-bg.jpg);
+	/* background: url(../img/servicos-bg.jpg); */
 	background-size: cover;
 	background-attachment: fixed;
 }
