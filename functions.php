@@ -29,6 +29,7 @@ add_action( 'wp_enqueue_scripts', 'carrega_scripts' );
 
 function carregar_script_admin(){
 	wp_enqueue_script( 'template', get_template_directory_uri(). '/assets/js/template.js',array(), null, true);
+	wp_enqueue_script( 'jquery.sumoselect.min', get_template_directory_uri(). '/assets/js/jquery.sumoselect.min.js',array());
 	wp_enqueue_script( 'media-uploads', get_template_directory_uri(). '/assets/js/media-uploads.js',array());
 }
 add_action('admin_enqueue_scripts', 'carregar_script_admin');
@@ -179,7 +180,7 @@ function add_your_fields_meta_box() {
 		'your_fields_meta_box', // $id
 		'Campos necessários do tema', // $title
 		'show_your_fields_meta_box', // $callback
-		'page', // $screen
+		'post_servicos', // $screen
 		'normal', // $context
 		'high' // $priority
 	);
@@ -188,38 +189,34 @@ add_action( 'add_meta_boxes', 'add_your_fields_meta_box' );
 
 function show_your_fields_meta_box() {
 	global $post;
-		$meta = get_post_meta( $post->ID, 'page', true );
+		$meta = get_post_meta( $post->ID, 'post_servicos', true );
 	?>
 
 	<input type="hidden" name="your_meta_box_nonce" value="<?php echo wp_create_nonce( basename(__FILE__) ); ?>">
 
     <!-- All fields will go here -->
-    <?php
-    if ($post->ID == 5) : ?>
-
-	<p>
-		<label for="page[textarea]"></label>
-		<br>
-		<textarea name="page[textarea]" id="page[textarea]" rows="5" cols="30" style="width:500px;"><?php echo $meta['textarea']; ?></textarea>
-	</p>
 	<!-- <p>
-		<label for="page[image]">Image Upload</label><br>
-		<input type="text" name="page[image]" id="page[image]" class="meta-image regular-text" value="<?php //echo $meta['image']; ?>">
+		<label for="post_servicos[textarea]"></label>
+		<br>
+		<textarea name="post_servicos[textarea]" id="post_servicos[textarea]" rows="5" cols="30" style="width:500px;"><?php //echo $meta['textarea']; ?></textarea>
+	</p> -->
+	<!-- <p>
+		<label for="post_servicos[image]">Image Upload</label><br>
+		<input type="text" name="post_servicos[image]" id="post_servicos[image]" class="meta-image regular-text" value="<?php //echo $meta['image']; ?>">
 		<input type="button" class="button image-upload" value="Browse">
 	</p> -->
-
 
 	<div>
 			<label for="swift_informa_arquivos" class="text_title"><?php _e('Documentos', 'textdomain'); ?></label>
 			<?php
-			$downloads = get_post_meta($post->ID, 'page', true);
+			$downloads = get_post_meta($post->ID, 'post_servicos', true);
 
-			$current = getCurrentLink($downloads);
-			$next = getNextLink($downloads);
+			$current = get_current_link($downloads);
+			$next = get_next_link($downloads);
 			?>
 			<div class="div-pai-swiftinforma">
-					<input class="descricao_arquivo" type="text" maxlength="32" name="page[title][<?php echo $current->key ?>]" value="<?php echo $current->title ?>" placeholder="Descrição" style="width: 20%;"/>
-					<input readonly="true" name="page[url][<?php echo $current->key ?>]" type="text"  value="<?php echo $current->url ?>" class="input-clone link input-preview-<?=$current->key?>">
+					<input class="descricao_arquivo" type="text" maxlength="32" name="post_servicos[title][<?php echo $current->key ?>]" value="<?php echo $current->title ?>" placeholder="Descrição" style="width: 20%;"/>
+					<input readonly="true" name="post_servicos[url][<?php echo $current->key ?>]" type="text"  value="<?php echo $current->url ?>" class="input-clone link input-preview-<?=$current->key?>">
 					<button type="button" class="button button-primary button-large btn-service-media-swiftinforma" data-arquivo="<?=$current->key?>"><?php _e('Selecionar', 'textdomain'); ?></button>
 					<a style="display:none" class="button btn-download-more"><span class="dashicons dashicons-plus"></span></a>
 			</div>
@@ -231,20 +228,18 @@ function show_your_fields_meta_box() {
 							foreach ($next['title'] as $key => $value):
 									?>
 									<div class="div-pai-swiftinforma">
-											<input class="descricao_arquivo" type="text" maxlength="32" name="page[title][<?php echo $key ?>]" value="<?php echo $next['title'][$key] ?>" placeholder="Descrição" style="width: 20%;"/>
-											<input readonly="true" name="page[url][<?php echo $key ?>]" type="text"  value="<?php echo $next['url'][$key] ?>" class="input-clone link input-preview-<?= $key ?>">
+											<input class="descricao_arquivo" type="text" maxlength="32" name="post_servicos[title][<?php echo $key ?>]" value="<?php echo $next['title'][$key] ?>" placeholder="Descrição" style="width: 20%;"/>
+											<input readonly="true" name="post_servicos[url][<?php echo $key ?>]" type="text"  value="<?php echo $next['url'][$key] ?>" class="input-clone link input-preview-<?= $key ?>">
 <!--                                        <button type="button" class="button button-primary button-large btn-service-media"><?php _e('Selecionar', 'textdomain'); ?></button>-->
 											<a  class="button btn-download-less-swiftinforma"><span class="dashicons dashicons-minus"></span></a>
 									</div>
+									 <div class="image-preview"><img src="<?php echo $next['url'][$key]; ?>" style="max-width: 250px;"></div>
 									<?php
 							endforeach;
 					endif;
 					?>
 			</div>
 	</div>
-
-<div class="image-preview"><img src="<?php //echo $meta['image']; ?>" style="max-width: 250px;"></div>
-	<?php endif; ?>
 	<?php
 }
 
@@ -258,7 +253,7 @@ function save_your_fields_meta( $post_id ) {
 		return $post_id;
 	}
 	// check permissions
-	if ( 'page' === $_POST['post_type'] ) {
+	if ( 'post_servicos' === $_POST['post_type'] ) {
 		if ( !current_user_can( 'edit_page', $post_id ) ) {
 			return $post_id;
 		} elseif ( !current_user_can( 'edit_post', $post_id ) ) {
@@ -266,32 +261,20 @@ function save_your_fields_meta( $post_id ) {
 		}
 	}
 
-	$old = get_post_meta( $post_id, 'page', true );
-	$new = $_POST['page'];
+	$old = get_post_meta( $post_id, 'post_servicos', true );
+	$new = $_POST['post_servicos'];
 
 	if ( $new && $new !== $old ) {
-		update_post_meta( $post_id, 'page', $new );
+		update_post_meta( $post_id, 'post_servicos', $new );
 	} elseif ( '' === $new && $old ) {
-		delete_post_meta( $post_id, 'page', $old );
+		delete_post_meta( $post_id, 'post_servicos', $old );
 	}
 }
 add_action( 'save_post', 'save_your_fields_meta' );
 
 
 
-
-
-function getNextLink($dataArray) {
-		if (is_array($dataArray)) {
-				$slice = array();
-				foreach ($dataArray as $key => $sub_array)
-						$slice[$key] = array_slice($sub_array, 1, null, true);
-				return $slice;
-		}
-		return array();
-}
-
-function getCurrentLink($dataArray) {
+function get_current_link($dataArray) {
 		if (is_array($dataArray)) {
 				$current_title = array_slice($dataArray['title'], 0, 1, true);
 				$current_url = array_slice($dataArray['url'], 0, 1, true);
@@ -311,6 +294,15 @@ function getCurrentLink($dataArray) {
 		);
 }
 
+function get_next_link($dataArray) {
+		if (is_array($dataArray)) {
+				$slice = array();
+				foreach ($dataArray as $key => $sub_array)
+						$slice[$key] = array_slice($sub_array, 1, null, true);
+				return $slice;
+		}
+		return array();
+}
 
 
 function save_uploaded_archive_swift($post_id, $filename) {
