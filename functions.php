@@ -88,7 +88,7 @@ add_theme_support( 'automatic-feed-links' );
 add_post_type_support( 'page', 'post-formats' );
 
 
-// Register Custom Post Type
+// Register Custom Post Type Serviços
 function post_servicos() {
 
 	$labels = array(
@@ -175,12 +175,100 @@ function register_category_servicos() {
 
 add_action('init', 'register_category_servicos');
 
+function post_portfolio() {
+
+	$labels = array(
+		'name'                  => _x( 'Portifólio', 'Post Type General Name', 'text_domain' ),
+		'singular_name'         => _x( 'Portifólio', 'Post Type Singular Name', 'text_domain' ),
+		'menu_name'             => __( 'Portifólio', 'text_domain' ),
+		'name_admin_bar'        => __( 'Portifólio', 'text_domain' ),
+		'archives'              => __( 'Item Archives', 'text_domain' ),
+		'attributes'            => __( 'Item Attributes', 'text_domain' ),
+		'parent_item_colon'     => __( 'Parent Item:', 'text_domain' ),
+		'all_items'             => __( 'Todos os Portifólios', 'text_domain' ),
+		'add_new_item'          => __( 'Adicionar novo', 'text_domain' ),
+		'add_new'               => __( 'Adicionar', 'text_domain' ),
+		'new_item'              => __( 'Novo', 'text_domain' ),
+		'edit_item'             => __( 'Editar', 'text_domain' ),
+		'update_item'           => __( 'Atualizar', 'text_domain' ),
+		'view_item'             => __( 'View Item', 'text_domain' ),
+		'view_items'            => __( 'View Items', 'text_domain' ),
+		'search_items'          => __( 'Search Item', 'text_domain' ),
+		'not_found'             => __( 'Not found', 'text_domain' ),
+		'not_found_in_trash'    => __( 'Not found in Trash', 'text_domain' ),
+		'featured_image'        => __( 'Imagem destacada', 'text_domain' ),
+		'set_featured_image'    => __( 'Definir imagem destacada', 'text_domain' ),
+		'remove_featured_image' => __( 'Remover imagem destacada', 'text_domain' ),
+		'use_featured_image'    => __( 'Usar imagem destacada', 'text_domain' ),
+		'insert_into_item'      => __( 'Insert into item', 'text_domain' ),
+		'uploaded_to_this_item' => __( 'Uploaded to this item', 'text_domain' ),
+		'items_list'            => __( 'Items list', 'text_domain' ),
+		'items_list_navigation' => __( 'Items list navigation', 'text_domain' ),
+		'filter_items_list'     => __( 'Filter items list', 'text_domain' ),
+	);
+	$args = array(
+		'label'                 => __( 'Portifólio', 'text_domain' ),
+		'description'           => __( 'Portifólio do tema', 'text_domain' ),
+		'labels'                => $labels,
+		'supports'              => array( 'title', 'editor', 'thumbnail', 'page-attributes', 'post-formats' ),
+		'taxonomies'            => array( 'portfolios', ' post_tag' ),
+		'hierarchical'          => false,
+		'public'                => true,
+		'show_ui'               => true,
+		'show_in_menu'          => true,
+		'menu_position'         => 5,
+		'show_in_admin_bar'     => true,
+		'menu_icon'   => 'dashicons-universal-access',
+		'show_in_nav_menus'     => true,
+		'can_export'            => true,
+		'has_archive'           => true,
+		'exclude_from_search'   => false,
+		'publicly_queryable'    => true,
+		'capability_type'       => 'post',
+	);
+	register_post_type( 'post_portfolio', $args );
+
+}
+add_action( 'init', 'post_portfolio', 0 );
+
+function register_category_portfolio() {
+		$labels = array(
+				'name' => _x('Categorias', 'Categorias', "text_domain"),
+				'singular_name' => _x('Categoria', 'Categoria', "text_domain"),
+				'search_items' => __('Pesquisar Categoria', "text_domain"),
+				'all_items' => __('Todas as Categorias', "text_domain"),
+				'parent_item' => __('Parent Categoria', "text_domain"),
+				'parent_item_colon' => __('Parent Categoria:', "text_domain"),
+				'edit_item' => __('Editar Categoria', "text_domain"),
+				'update_item' => __('Atualizar Categoria', "text_domain"),
+				'add_new_item' => __('Adicionar novo Categoria', "text_domain"),
+				'new_item_name' => __('Novo Categoria', "text_domain"),
+				'menu_name' => __('Categorias', "text_domain")
+		);
+
+		$args = array(
+				'hierarchical' => true, // true =  Category
+				'labels' => $labels,
+				'show_ui' => true,
+				'show_admin_column' => true,
+				'show_in_nav_menus' => false,
+				'query_var' => true,
+				'rewrite' => array('slug' => 'porfolio')
+		);
+
+		register_taxonomy('ks_potfolio', array('post_portfolio'), $args);
+}
+
+add_action('init', 'register_category_portfolio');
+
+
+
 function add_your_fields_meta_box() {
 	add_meta_box(
 		'your_fields_meta_box', // $id
 		'Campos necessários do tema', // $title
 		'show_your_fields_meta_box', // $callback
-		'post_servicos', // $screen
+		'post_portfolio', // $screen
 		'normal', // $context
 		'high' // $priority
 	);
@@ -189,34 +277,34 @@ add_action( 'add_meta_boxes', 'add_your_fields_meta_box' );
 
 function show_your_fields_meta_box() {
 	global $post;
-		$meta = get_post_meta( $post->ID, 'post_servicos', true );
+		$meta = get_post_meta( $post->ID, 'post_portfolio', true );
 	?>
 
 	<input type="hidden" name="your_meta_box_nonce" value="<?php echo wp_create_nonce( basename(__FILE__) ); ?>">
 
     <!-- All fields will go here -->
 	<!-- <p>
-		<label for="post_servicos[textarea]"></label>
+		<label for="post_portfolio[textarea]"></label>
 		<br>
-		<textarea name="post_servicos[textarea]" id="post_servicos[textarea]" rows="5" cols="30" style="width:500px;"><?php //echo $meta['textarea']; ?></textarea>
+		<textarea name="post_portfolio[textarea]" id="post_portfolio[textarea]" rows="5" cols="30" style="width:500px;"><?php //echo $meta['textarea']; ?></textarea>
 	</p> -->
 	<!-- <p>
-		<label for="post_servicos[image]">Image Upload</label><br>
-		<input type="text" name="post_servicos[image]" id="post_servicos[image]" class="meta-image regular-text" value="<?php //echo $meta['image']; ?>">
+		<label for="post_portfolio[image]">Image Upload</label><br>
+		<input type="text" name="post_portfolio[image]" id="post_portfolio[image]" class="meta-image regular-text" value="<?php //echo $meta['image']; ?>">
 		<input type="button" class="button image-upload" value="Browse">
 	</p> -->
 
 	<div>
-			<label for="swift_informa_arquivos" class="text_title"><?php _e('Documentos', 'textdomain'); ?></label>
+			<label for="swift_informa_arquivos" class="text_title"><?php _e('Imagens do Portifólio', 'textdomain'); ?></label>
 			<?php
-			$downloads = get_post_meta($post->ID, 'post_servicos', true);
+			$downloads = get_post_meta($post->ID, 'post_portfolio', true);
 
 			$current = get_current_link($downloads);
 			$next = get_next_link($downloads);
 			?>
 			<div class="div-pai-swiftinforma">
-					<input class="descricao_arquivo" type="text" maxlength="32" name="post_servicos[title][<?php echo $current->key ?>]" value="<?php echo $current->title ?>" placeholder="Descrição" style="width: 20%;"/>
-					<input readonly="true" name="post_servicos[url][<?php echo $current->key ?>]" type="text"  value="<?php echo $current->url ?>" class="input-clone link input-preview-<?=$current->key?>">
+					<input class="descricao_arquivo" type="text" maxlength="32" name="post_portfolio[title][<?php echo $current->key ?>]" value="<?php echo $current->title ?>" placeholder="Descrição" style="width: 20%;"/>
+					<input readonly="true" name="post_portfolio[url][<?php echo $current->key ?>]" type="text"  value="<?php echo $current->url ?>" class="input-clone link input-preview-<?=$current->key?>">
 					<button type="button" class="button button-primary button-large btn-service-media-swiftinforma" data-arquivo="<?=$current->key?>"><?php _e('Selecionar', 'textdomain'); ?></button>
 					<a style="display:none" class="button btn-download-more"><span class="dashicons dashicons-plus"></span></a>
 			</div>
@@ -228,8 +316,8 @@ function show_your_fields_meta_box() {
 							foreach ($next['title'] as $key => $value):
 									?>
 									<div class="div-pai-swiftinforma">
-											<input class="descricao_arquivo" type="text" maxlength="32" name="post_servicos[title][<?php echo $key ?>]" value="<?php echo $next['title'][$key] ?>" placeholder="Descrição" style="width: 20%;"/>
-											<input readonly="true" name="post_servicos[url][<?php echo $key ?>]" type="text"  value="<?php echo $next['url'][$key] ?>" class="input-clone link input-preview-<?= $key ?>">
+											<input class="descricao_arquivo" type="text" maxlength="32" name="post_portfolio[title][<?php echo $key ?>]" value="<?php echo $next['title'][$key] ?>" placeholder="Descrição" style="width: 20%;"/>
+											<input readonly="true" name="post_portfolio[url][<?php echo $key ?>]" type="text"  value="<?php echo $next['url'][$key] ?>" class="input-clone link input-preview-<?= $key ?>">
 <!--                                        <button type="button" class="button button-primary button-large btn-service-media"><?php _e('Selecionar', 'textdomain'); ?></button>-->
 											<a  class="button btn-download-less-swiftinforma"><span class="dashicons dashicons-minus"></span></a>
 									</div>
@@ -253,7 +341,7 @@ function save_your_fields_meta( $post_id ) {
 		return $post_id;
 	}
 	// check permissions
-	if ( 'post_servicos' === $_POST['post_type'] ) {
+	if ( 'post_portfolio' === $_POST['post_type'] ) {
 		if ( !current_user_can( 'edit_page', $post_id ) ) {
 			return $post_id;
 		} elseif ( !current_user_can( 'edit_post', $post_id ) ) {
@@ -261,13 +349,13 @@ function save_your_fields_meta( $post_id ) {
 		}
 	}
 
-	$old = get_post_meta( $post_id, 'post_servicos', true );
-	$new = $_POST['post_servicos'];
+	$old = get_post_meta( $post_id, 'post_portfolio', true );
+	$new = $_POST['post_portfolio'];
 
 	if ( $new && $new !== $old ) {
-		update_post_meta( $post_id, 'post_servicos', $new );
+		update_post_meta( $post_id, 'post_portfolio', $new );
 	} elseif ( '' === $new && $old ) {
-		delete_post_meta( $post_id, 'post_servicos', $old );
+		delete_post_meta( $post_id, 'post_portfolio', $old );
 	}
 }
 add_action( 'save_post', 'save_your_fields_meta' );
