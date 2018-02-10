@@ -98,6 +98,25 @@ endif;
   </div>
 </div>
 <!-- Portfolio Section -->
+
+<script type="text/javascript">
+ jQuery(document).ready(function(){ 
+  jQuery().fancybox({
+    selector : '[data-fancybox="toaqui"]',
+    loop     : true,
+    protect: true,
+    buttons : [
+      'zoom',
+      'thumbs',
+      'close'
+    ],
+    smallBtn   : true,
+
+  });
+
+});
+
+</script>
 <div id="works">
   <div class="container"> <!-- Container -->
     <div class="section-title text-center center">
@@ -123,88 +142,24 @@ endif;
       <div class="portfolio-items">
         <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 lorem">
           <div class="portfolio-item">
-            <div class="hover-bg"> <a href="img/portfolio/01.jpg" title="Project description" rel="prettyPhoto">
+            <div class="hover-bg">               
+
+                            <a data-fancybox="toaqui" data-caption="Aqui pode vir um texto" href="http://localhost/kaiquesalles.com.br/wp-content/uploads/2018/01/kainansalles.jpeg" title="Project description" rel="prettyPhoto">
+              <a data-fancybox="toaqui" href="http://localhost/kaiquesalles.com.br/wp-content/uploads/2018/01/intro-bg.jpg" title="Project description" rel="prettyPhoto">
+
               <div class="hover-text">
                 <h4>Project Title</h4>
                 <p>Web Design</p>
               </div>
-              <img src="img/portfolio/01.jpg" class="img-responsive" alt="Project Title"> </a> </div>
-          </div>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 consectetur">
-          <div class="portfolio-item">
-            <div class="hover-bg"> <a href="img/portfolio/02.jpg" title="Project description" rel="prettyPhoto">
-              <div class="hover-text">
-                <h4>Project Title</h4>
-                <p>Web Development</p>
-              </div>
-              <img src="img/portfolio/02.jpg" class="img-responsive" alt="Project Title"> </a> </div>
-          </div>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 lorem">
-          <div class="portfolio-item">
-            <div class="hover-bg"> <a href="img/portfolio/03.jpg" title="Project description" rel="prettyPhoto">
-              <div class="hover-text">
-                <h4>Project Title</h4>
-                <p>Web Design</p>
-              </div>
-              <img src="img/portfolio/03.jpg" class="img-responsive" alt="Project Title"> </a> </div>
-          </div>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 lorem">
-          <div class="portfolio-item">
-            <div class="hover-bg"> <a href="img/portfolio/04.jpg" title="Project description" rel="prettyPhoto">
-              <div class="hover-text">
-                <h4>Project Title</h4>
-                <p>Web Design</p>
-              </div>
-              <img src="img/portfolio/04.jpg" class="img-responsive" alt="Project Title"> </a> </div>
-          </div>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 consectetur">
-          <div class="portfolio-item">
-            <div class="hover-bg"> <a href="img/portfolio/05.jpg" title="Project description" rel="prettyPhoto">
-              <div class="hover-text">
-                <h4>Project Title</h4>
-                <p>Web Development</p>
-              </div>
-              <img src="img/portfolio/05.jpg" class="img-responsive" alt="Project Title"> </a> </div>
-          </div>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 dapibus">
-          <div class="portfolio-item">
-            <div class="hover-bg"> <a href="img/portfolio/06.jpg" title="Project description" rel="prettyPhoto">
-              <div class="hover-text">
-                <h4>Project Title</h4>
-                <p>Branding</p>
-              </div>
-              <img src="img/portfolio/06.jpg" class="img-responsive" alt="Project Title"> </a> </div>
-          </div>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 dapibus consectetur">
-          <div class="portfolio-item">
-            <div class="hover-bg"> <a href="img/portfolio/07.jpg" title="Project description" rel="prettyPhoto">
-              <div class="hover-text">
-                <h4>Project Title</h4>
-                <p>Web Development, Branding</p>
-              </div>
-              <img src="img/portfolio/07.jpg" class="img-responsive" alt="Project Title"> </a> </div>
-          </div>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 lorem">
-          <div class="portfolio-item">
-            <div class="hover-bg"> <a href="img/portfolio/08.jpg" title="Project description" rel="prettyPhoto">
-              <div class="hover-text">
-                <h4>Project Title</h4>
-                <p>Web Design</p>
-              </div>
-              <img src="img/portfolio/08.jpg" class="img-responsive" alt="Project Title"> </a> </div>
+              <img src="http://localhost/kaiquesalles.com.br/wp-content/uploads/2018/01/intro-bg.jpg" class="img-responsive" alt="Project Title"> </a> 
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 <!-- Contact Section -->
 <div id="contact" class="text-center">
   <div class="container">

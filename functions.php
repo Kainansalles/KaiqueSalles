@@ -12,8 +12,9 @@ function carrega_scripts(){
 	// Enfileirando estilos e scripts próprios
 	wp_enqueue_style( 'style', get_template_directory_uri() . '/assets/css/style.css', array(), '1.0', 'all');
 	wp_enqueue_style( 'prettyPhoto', get_template_directory_uri() . '/assets/css/prettyPhoto.css', array(), '1.0', 'all');
+	wp_enqueue_style( 'jquery.fancybox', get_template_directory_uri() . '/assets/css/jquery.fancybox.css', array(), '1.0', 'all');	
 	wp_enqueue_style( 'font-awesome', get_template_directory_uri() . '/assets/fonts/font-awesome/css/font-awesome.css', array(), '1.0', 'all');
-
+	
 	//wp_enqueue_script( 'modernizr.custom', get_template_directory_uri(). '/assets/js/modernizr.custom.js', array(), null, true);
 	wp_enqueue_script( 'jquery.1.11.1', get_template_directory_uri(). '/assets/js/jquery.1.11.1.js', array(), null, true);
 	wp_enqueue_script( 'SmoothScroll', get_template_directory_uri(). '/assets/js/SmoothScroll.js', array(), null, true);
@@ -23,6 +24,7 @@ function carrega_scripts(){
 	wp_enqueue_script( 'jqBootstrapValidation', get_template_directory_uri(). '/assets/js/jqBootstrapValidation.js',array(), null, true);
 	wp_enqueue_script( 'contact_me', get_template_directory_uri(). '/assets/js/contact_me.js',array(), null, true);
 	wp_enqueue_script( 'main', get_template_directory_uri(). '/assets/js/main.js',array(), null, true);
+	wp_enqueue_script( 'jquery.fancybox', get_template_directory_uri(). '/assets/js/jquery.fancybox.js',array(), null, true);
 
 }
 add_action( 'wp_enqueue_scripts', 'carrega_scripts' );
