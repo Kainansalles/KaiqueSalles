@@ -32,9 +32,7 @@
     <![endif]-->
 </head>
 <body <?php body_class(); ?> id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
-<div id="preloader">
-  <div id="status"> <img src="<?= get_template_directory_uri(); ?> /assets/img/preloader.gif " height="64" width="64" alt=""> </div>
-</div>
+
 <!-- Navigation -->
 <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
   <div class="container">
@@ -48,12 +46,7 @@
         <!-- Hidden li included to remove active class from sobre link when scrolled up past sobre section -->
         <li class="hidden"> <a href="#page-top"></a> </li>
         <?php
-          $menu = 'meu_menu_principal';
-          $locations_menu = get_nav_menu_locations();
-          $menu_id = $locations_menu[ $menu ] ;
-          $menu = wp_get_nav_menu_items(wp_get_nav_menu_object($menu_id)->name);
-
-          foreach ($menu as $key) {?>
+          foreach (render_menu() as $key) {?>
             <li> <a class="page-scroll" href="<?= $key->url?>"><?= $key->title?></a> </li>
           <?php
           }

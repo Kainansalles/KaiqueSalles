@@ -288,7 +288,7 @@ hr {
 	transition: all 0.5s;
 }
 /* Gallery Section */
-#works {
+#portfolio {
 	padding: 120px 0;
 	background: #f6f6f6;
 }
@@ -410,7 +410,7 @@ ol.type li a:hover {
 .hover-bg:hover .hover-text {
 	opacity: 1;
 }
-#works i.fa {
+#portfolio i.fa {
 	font-size: 20px;
 	padding: 5px;
 	color: #F4D03F;

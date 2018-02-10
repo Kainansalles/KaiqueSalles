@@ -1,14 +1,5 @@
 <?php get_header();
-$menu = 'meu_menu_principal';
-$locations_menu = get_nav_menu_locations();
-$menu_id = $locations_menu[ $menu ] ;
-$menu = wp_get_nav_menu_items(wp_get_nav_menu_object($menu_id)->name);
-
-$args = array(
-    'post_type'      => 'page'
-  );
-$paginas = new WP_Query($args);
-
+  render_menu();
 ?>
 
 <div id="intro" style="background-image: url(<?= get_header_image(); ?>);">
@@ -26,113 +17,59 @@ $paginas = new WP_Query($args);
 </div>
 
 <!-- sobre Section -->
-<?php
-if($paginas->have_posts()) :
-  $count = 0;
-  while ($paginas->have_posts()) : $paginas->the_post();
-    if ($paginas->posts[$count]->post_title == "Sobre") :
-     ?>
-<div id="<?= $menu[0]->post_name ?>">
-  <div class="container">
-    <div class="section-title text-center center">
-      <h2><?= $paginas->posts[$count]->post_title; ?></h2>
-      <hr>
-    </div>
-    <div class="row">
-      <div class="col-md-4"> <?php the_post_thumbnail("shop_thumbnail", array("class" => "img-responsive")) ?></div>
-      <div class="col-md-4">
-        <div class="sobre-text">
-          <?php the_content(); ?>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="sobre-text">
-          <p><?php echo get_post_meta($paginas->posts[$count]->ID, 'page', true)['textarea']; ?></p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<?php
-    endif;
-    $count ++;
-  endwhile;
-endif;
- ?>
 
- <?php
-  $args = array(
-      'post_type'      => 'post_servicos',
-      'posts_per_page' => -1
-    );
-  $servicos = new WP_Query($args);
+<?php get_template_part('templates-parts/content', 'sobre'); ?>
 
-  ?>
-
+ 
 <!-- Services Section -->
-<div id="servicos" style="background-image:url(<?php echo wp_get_attachment_url(get_theme_mod('set_servicos')); ?>);" class="text-center">
-  <div class="container">
-    <div class="section-title center">
-      <h2>Serviços</h2>
-      <hr>
-    </div>
-    <div class="space"></div>
-    <div class="row">
-      <?php
-        if($servicos->have_posts()) :
-            while ($servicos->have_posts()) : $servicos->the_post();
-      ?>
-      <div class="col-md-3 col-sm-6">
-        <div class="service">
-          <?php the_post_thumbnail(array(150,150));?>
-          <h3><?php the_title(); ?></h3>
-          <?php the_content();?>
-        </div>
-      </div>
-      <?php
-        endwhile;
-      endif;
-       ?>
 
-    </div>
-  </div>
-</div>
+<?php get_template_part('templates-parts/content', 'servicos'); ?>
+
+
 <!-- Portfolio Section -->
-
-<script type="text/javascript">
- jQuery(document).ready(function(){ 
-  jQuery().fancybox({
-    selector : '[data-fancybox="toaqui"]',
-    loop     : true,
-    protect: true,
-    buttons : [
-      'zoom',
-      'thumbs',
-      'close'
-    ],
-    smallBtn   : true,
-
-  });
-
-});
-
-</script>
-<div id="works">
+<div id="portfolio">
   <div class="container"> <!-- Container -->
     <div class="section-title text-center center">
-      <h2>Our Portfolio</h2>
+      <?php $paginas = render_post_type('page');
+
+
+      if($paginas->have_posts()) :
+        $count = 0;
+        while ($paginas->have_posts()) : $paginas->the_post();
+          if ($paginas->posts[$count]->post_name == "portfolio") :
+      ?>
+      <h2><?= $paginas->posts[$count]->post_title; ?></h2>
       <hr>
       <div class="clearfix"></div>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diamcommodo nibh ante facilisis.</p>
+      <?php the_content(); ?>
     </div>
+    <?php
+        endif;
+        $count ++;
+      endwhile;
+    endif;
+     ?>
+     <?php 
+        $terms = get_terms( 'ks_potfolio', array(
+         'orderby'    => 'name',
+         'hide_empty' => true,
+     ));
+
+     ?>
     <div class="categories">
       <ul class="cat">
         <li>
           <ol class="type">
-            <li><a href="#" data-filter="*" class="active">All</a></li>
-            <li><a href="#" data-filter=".lorem">Web Design</a></li>
-            <li><a href="#" data-filter=".consectetur">Web Development</a></li>
-            <li><a href="#" data-filter=".dapibus">Branding</a></li>
+            <li><a data-filter="*" class="active">Todos</a></li>
+            <!-- <li><a data-filter=".lorem">Web Design</a></li>
+            <li><a data-filter=".consectetur">Web Development</a></li>
+            <li><a data-filter=".dapibus">Branding</a></li> -->
+            <?php 
+            foreach ($terms as $term) : ?>
+              <?php //var_dump($term);die;?>
+              <li><a data-filter=".<?= $term->slug ?>"><?= $term->name?></a></li>
+            <? endforeach; ?>
+
           </ol>
         </li>
       </ul>
@@ -140,13 +77,17 @@ endif;
     </div>
     <div class="row">
       <div class="portfolio-items">
+        <?php $portfolio = render_post_type('post_portfolio');
+        if($portfolio->have_posts()) :
+            while ($portfolio->have_posts()) : $portfolio->the_post(); 
+              $downloads = get_post_meta($post->ID, 'post_portfolio', true);
+              ?>
+
         <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 lorem">
           <div class="portfolio-item">
-            <div class="hover-bg">               
-
-                            <a data-fancybox="toaqui" data-caption="Aqui pode vir um texto" href="http://localhost/kaiquesalles.com.br/wp-content/uploads/2018/01/kainansalles.jpeg" title="Project description" rel="prettyPhoto">
-              <a data-fancybox="toaqui" href="http://localhost/kaiquesalles.com.br/wp-content/uploads/2018/01/intro-bg.jpg" title="Project description" rel="prettyPhoto">
-
+            <div class="hover-bg">
+              <a data-fancybox="toaqui" data-caption="Aqui pode vir um texto" href="http://localhost/kaiquesalles.com.br/wp-content/uploads/2018/01/intro-bg.jpg" title="Project description" rel="prettyPhoto">
+                
               <div class="hover-text">
                 <h4>Project Title</h4>
                 <p>Web Design</p>
@@ -154,11 +95,16 @@ endif;
               <img src="http://localhost/kaiquesalles.com.br/wp-content/uploads/2018/01/intro-bg.jpg" class="img-responsive" alt="Project Title"> </a> 
             </div>
           </div>
+          <?php
+            endwhile;
+            endif;
+          ?>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <!-- Contact Section -->
 <div id="contact" class="text-center">
