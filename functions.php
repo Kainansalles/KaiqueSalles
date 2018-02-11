@@ -290,3 +290,38 @@ function register_category_portfolio() {
 }
 
 add_action('init', 'register_category_portfolio');
+
+
+function get_custom_category( $id, $taxonomy, $before = '', $sep = '', $after = '' ) {
+    $terms = get_the_terms( $id, $taxonomy );
+ 
+    if ( is_wp_error( $terms ) )
+        return $terms;
+ 
+    if ( empty( $terms ) )
+        return false;
+ 
+    $links = array();
+ 
+    foreach ( $terms as $term ) {
+        $link = get_term_link( $term, $taxonomy );
+        if ( is_wp_error( $link ) ) {
+            return $link;
+        }
+        $links[] = $term->slug . ' ';
+    }
+ 
+    /**
+     * Filters the term links for a given taxonomy.
+     *
+     * The dynamic portion of the filter name, `$taxonomy`, refers
+     * to the taxonomy slug.
+     *
+     * @since 2.5.0
+     *
+     * @param array $links An array of term links.
+     */
+    $term_links = apply_filters( "term_links-{$taxonomy}", $links );
+ 
+    return $before . join( $sep, $term_links ) . $after;
+}

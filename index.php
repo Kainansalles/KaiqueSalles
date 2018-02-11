@@ -32,7 +32,6 @@
     <div class="section-title text-center center">
       <?php $paginas = render_post_type('page');
 
-
       if($paginas->have_posts()) :
         $count = 0;
         while ($paginas->have_posts()) : $paginas->the_post();
@@ -60,16 +59,11 @@
       <ul class="cat">
         <li>
           <ol class="type">
-            <li><a data-filter="*" class="active">Todos</a></li>
-            <!-- <li><a data-filter=".lorem">Web Design</a></li>
-            <li><a data-filter=".consectetur">Web Development</a></li>
-            <li><a data-filter=".dapibus">Branding</a></li> -->
+            <li><a data-filter="*" class="active cat-todos">Todos</a></li>
             <?php 
             foreach ($terms as $term) : ?>
-              <?php //var_dump($term);die;?>
               <li><a data-filter=".<?= $term->slug ?>"><?= $term->name?></a></li>
             <? endforeach; ?>
-
           </ol>
         </li>
       </ul>
@@ -77,29 +71,40 @@
     </div>
     <div class="row">
       <div class="portfolio-items">
-        <?php $portfolio = render_post_type('post_portfolio');
+        <?php $portfolio = render_post_type('post_portfolio');        
         if($portfolio->have_posts()) :
+          $count = 0;
             while ($portfolio->have_posts()) : $portfolio->the_post(); 
-              $downloads = get_post_meta($post->ID, 'post_portfolio', true);
-              ?>
+              $downloads = get_post_meta($post->ID, 'post_portfolio', true)['url'];
+              $categorias = get_custom_category( $post->ID, 'ks_potfolio'); 
+              $port_filtro = $portfolio->posts[$count]->post_name;?>
 
-        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 lorem">
-          <div class="portfolio-item">
-            <div class="hover-bg">
-              <a data-fancybox="toaqui" data-caption="Aqui pode vir um texto" href="http://localhost/kaiquesalles.com.br/wp-content/uploads/2018/01/intro-bg.jpg" title="Project description" rel="prettyPhoto">
-                
+        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 <?= $categorias ?>" >
+          <div class="portfolio-item" data-filter=".<?= $port_filtro;?>">
+            <div class="hover-bg">                
               <div class="hover-text">
-                <h4>Project Title</h4>
-                <p>Web Design</p>
+                <h4><?= the_title();?></h4>
+                <p><?= the_content();?></p>
               </div>
-              <img src="http://localhost/kaiquesalles.com.br/wp-content/uploads/2018/01/intro-bg.jpg" class="img-responsive" alt="Project Title"> </a> 
+              <img src="<?= get_the_post_thumbnail_url(); ?>" class="img-responsive img-thumbnail" alt="<?= the_title();?>"> 
             </div>
           </div>
+        </div>
+
+        <div style="display: none;" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 <?= $port_filtro;?>">
+          <div class="portfolio-sub-item">
+            <div class="hover-bg">
+                <!-- <a data-fancybox="toaqui" data-caption="Aqui pode vir um texto" href="http://localhost/kaiquesalles.com.br/wp-content/uploads/2018/01/intro-bg.jpg" title="Project description" rel="prettyPhoto"></a> -->
+                <img src="<?= $downloads[0]; ?>" class="img-responsive img-thumbnail"> 
+            </div>
+          </div>
+        </div>
+
           <?php
+          $count ++;
             endwhile;
             endif;
           ?>
-        </div>
       </div>
     </div>
   </div>

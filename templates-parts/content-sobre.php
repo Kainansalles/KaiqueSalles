@@ -14,15 +14,10 @@ if($paginas->have_posts()) :
       <hr>
     </div>
     <div class="row">
-      <div class="col-md-4"> <?php the_post_thumbnail("shop_thumbnail", array("class" => "img-responsive")) ?></div>
-      <div class="col-md-4">
+      <div class="col-md-6"> <?php the_post_thumbnail("shop_thumbnail", array("class" => "img-responsive")) ?></div>
+      <div class="col-md-6">
         <div class="sobre-text">
           <?php the_content(); ?>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="sobre-text">
-          <p><?php echo get_post_meta($paginas->posts[$count]->ID, 'page', true)['textarea']; ?></p>
         </div>
       </div>
     </div>
