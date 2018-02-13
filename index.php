@@ -74,8 +74,7 @@
         <?php $portfolio = render_post_type('post_portfolio');        
         if($portfolio->have_posts()) :
           $count = 0;
-            while ($portfolio->have_posts()) : $portfolio->the_post(); 
-              $downloads = get_post_meta($post->ID, 'post_portfolio', true)['url'];
+            while ($portfolio->have_posts()) : $portfolio->the_post();                           
               $categorias = get_custom_category( $post->ID, 'ks_potfolio'); 
               $port_filtro = $portfolio->posts[$count]->post_name;?>
 
@@ -90,21 +89,26 @@
             </div>
           </div>
         </div>
-
-        <div style="display: none;" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 <?= $port_filtro;?>">
-          <div class="portfolio-sub-item">
-            <div class="hover-bg">
-                <!-- <a data-fancybox="toaqui" data-caption="Aqui pode vir um texto" href="http://localhost/kaiquesalles.com.br/wp-content/uploads/2018/01/intro-bg.jpg" title="Project description" rel="prettyPhoto"></a> -->
-                <img src="<?= $downloads[0]; ?>" class="img-responsive img-thumbnail"> 
-            </div>
-          </div>
-        </div>
-
-          <?php
+        <?php
           $count ++;
             endwhile;
             endif;
-          ?>
+        ?>
+        <?php $downloads = get_post_meta($post->ID, 'post_portfolio', true)['url']; 
+        $count = 0;
+        foreach ($downloads as $key) : ?>      
+        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 <?= $port_filtro;?>">
+          <div style="display: none;" class="portfolio-sub-item">
+            <div class="hover-bg">
+                <a data-fancybox="<?= $port_filtro;?>" data-caption="Aqui pode vir um texto" href="<?= $downloads[$count]; ?>" title="Project description" rel="prettyPhoto">
+                  <img src="<?= $downloads[$count]; ?>" class="img-responsive img-thumbnail"> 
+                </a>
+            </div>
+          </div>
+        </div>
+      <?php $count ++; ?> 
+      <? endforeach ?>
+
       </div>
     </div>
   </div>

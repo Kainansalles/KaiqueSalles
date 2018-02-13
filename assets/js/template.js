@@ -2,7 +2,7 @@
       // Instantiates the variable that holds the media library frame.
       var meta_image_frame;
       // Runs when the image button is clicked.
-      $('.image-upload').click(function (e) {
+      $('.image-upload-obrigatorio').click(function (e) {        
         // Get preview pane
         var meta_image_preview = $(this).parent().parent().children('.image-preview');
         // Prevents the default action from occuring.
@@ -31,4 +31,4 @@
         // Opens the media library frame.
         meta_image_frame.open();
       });
-    });
+});

@@ -1,4 +1,4 @@
- jQuery(document).ready(function(){ 
+ jQuery(document).ready(function(){
   var $grid = jQuery('.portfolio-items').isotope({
     // options
   });
