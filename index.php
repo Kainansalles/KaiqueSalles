@@ -94,14 +94,14 @@
             endwhile;
             endif;
         ?>
-        <?php $downloads = get_post_meta($post->ID, 'post_portfolio', true)['url']; 
+        <?php $downloads = get_post_meta($post->ID, 'post_portfolio', true);
         $count = 0;
-        foreach ($downloads as $key) : ?>      
+        foreach ($downloads as $key) : ?>
         <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 <?= $port_filtro;?>">
           <div style="display: none;" class="portfolio-sub-item">
             <div class="hover-bg">
-                <a data-fancybox="<?= $port_filtro;?>" data-caption="Aqui pode vir um texto" href="<?= $downloads[$count]; ?>" title="Project description" rel="prettyPhoto">
-                  <img src="<?= $downloads[$count]; ?>" class="img-responsive img-thumbnail"> 
+                <a data-fancybox="<?= $port_filtro;?>" data-caption="Aqui pode vir um texto" href="<?= $key;?>" title="Project description" rel="prettyPhoto">
+                  <img src="<?= $key; ?>" class="img-responsive img-thumbnail"> 
                 </a>
             </div>
           </div>

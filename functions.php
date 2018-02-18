@@ -39,8 +39,6 @@ add_action( 'wp_enqueue_scripts', 'carrega_scripts' );
 
 function carregar_script_admin(){
 	wp_enqueue_script( 'template', get_template_directory_uri(). '/assets/js/template.js',array(), null, true);
-	wp_enqueue_script( 'jquery.sumoselect.min', get_template_directory_uri(). '/assets/js/jquery.sumoselect.min.js',array());
-	wp_enqueue_script( 'media-uploads', get_template_directory_uri(). '/assets/js/media-uploads.js',array());
 }
 add_action('admin_enqueue_scripts', 'carregar_script_admin');
 
