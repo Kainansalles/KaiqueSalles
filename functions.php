@@ -30,7 +30,7 @@ function carrega_scripts(){
 	wp_enqueue_script( 'kaiquesalles', get_template_directory_uri(). '/assets/js/kaiquesalles.js',array(), null, true);
 
 	wp_enqueue_script( 'jqBootstrapValidation', get_template_directory_uri(). '/assets/js/jqBootstrapValidation.js',array(), null, true);
-	wp_enqueue_script( 'contact_me', get_template_directory_uri(). '/assets/js/contact_me.js',array(), null, true);
+	//wp_enqueue_script( 'contact_me', get_template_directory_uri(). '/assets/js/contact_me.js',array(), null, true);
 	wp_enqueue_script( 'main', get_template_directory_uri(). '/assets/js/main.js',array(), null, true);
 	wp_enqueue_script( 'jquery.fancybox', get_template_directory_uri(). '/assets/js/jquery.fancybox.js',array(), null, true);
 
@@ -45,7 +45,8 @@ add_action('admin_enqueue_scripts', 'carregar_script_admin');
 // Função para registro de nossos menus
 register_nav_menus(
 	array(
-		'meu_menu_principal' => 'Menu Principal'
+		'meu_menu_principal' => 'Menu Principal',
+		'meu_menu_social'	 => 'Redes sociais'
 	)
 );
 

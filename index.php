@@ -27,103 +27,27 @@
 
 
 <!-- Portfolio Section -->
-<div id="portfolio">
-  <div class="container"> <!-- Container -->
-    <div class="section-title text-center center">
-      <?php $paginas = render_post_type('page');
 
-      if($paginas->have_posts()) :
-        $count = 0;
-        while ($paginas->have_posts()) : $paginas->the_post();
-          if ($paginas->posts[$count]->post_name == "portfolio") :
-      ?>
-      <h2><?= $paginas->posts[$count]->post_title; ?></h2>
-      <hr>
-      <div class="clearfix"></div>
-      <?php the_content(); ?>
-    </div>
-    <?php
-        endif;
-        $count ++;
-      endwhile;
-    endif;
-     ?>
-     <?php 
-        $terms = get_terms( 'ks_potfolio', array(
-         'orderby'    => 'name',
-         'hide_empty' => true,
-     ));
-
-     ?>
-    <div class="categories">
-      <ul class="cat">
-        <li>
-          <ol class="type">
-            <li><a data-filter="*" class="active cat-todos">Todos</a></li>
-            <?php 
-            foreach ($terms as $term) : ?>
-              <li><a data-filter=".<?= $term->slug ?>"><?= $term->name?></a></li>
-            <? endforeach; ?>
-          </ol>
-        </li>
-      </ul>
-      <div class="clearfix"></div>
-    </div>
-    <div class="row">
-      <div class="portfolio-items">
-        <?php $portfolio = render_post_type('post_portfolio');        
-        if($portfolio->have_posts()) :
-          $count = 0;
-            while ($portfolio->have_posts()) : $portfolio->the_post();                           
-              $categorias = get_custom_category( $post->ID, 'ks_potfolio'); 
-              $port_filtro = $portfolio->posts[$count]->post_name;?>
-
-        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 <?= $categorias ?>" >
-          <div class="portfolio-item" data-filter=".<?= $port_filtro;?>">
-            <div class="hover-bg">                
-              <div class="hover-text">
-                <h4><?= the_title();?></h4>
-                <p><?= the_content();?></p>
-              </div>
-              <img src="<?= get_the_post_thumbnail_url(); ?>" class="img-responsive img-thumbnail" alt="<?= the_title();?>"> 
-            </div>
-          </div>
-        </div>
-        <?php
-          $count ++;
-            endwhile;
-            endif;
-        ?>
-        <?php $downloads = get_post_meta($post->ID, 'post_portfolio', true);
-        $count = 0;
-        foreach ($downloads as $key) : ?>
-        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 <?= $port_filtro;?>">
-          <div style="display: none;" class="portfolio-sub-item">
-            <div class="hover-bg">
-                <a data-fancybox="<?= $port_filtro;?>" data-caption="Aqui pode vir um texto" href="<?= $key;?>" title="Project description" rel="prettyPhoto">
-                  <img src="<?= $key; ?>" class="img-responsive img-thumbnail"> 
-                </a>
-            </div>
-          </div>
-        </div>
-      <?php $count ++; ?> 
-      <? endforeach ?>
-
-      </div>
-    </div>
-  </div>
-</div>
-
+<?php get_template_part('templates-parts/content', 'portfolio'); ?>
 
 <!-- Contact Section -->
+
+<?php 
+$paginas = render_post_type('page');
+if($paginas->have_posts()) :
+  $count = 0;
+  while ($paginas->have_posts()) : $paginas->the_post();
+    if ($paginas->posts[$count]->post_name == "contato") :
+     ?>
+   
 <div id="contact" class="text-center">
   <div class="container">
     <div class="section-title center">
-      <h2>Contact us</h2>
+      <h2><?= $paginas->posts[$count]->post_title; ?></h2>
       <hr>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diamcommodo nibh ante facilisis.</p>
+      <?php the_content(); ?>
     </div>
-    <div class="col-md-8 col-md-offset-2">
+    <!-- <div class="col-md-8 col-md-offset-2">
       <div class="col-md-4">
         <div class="contact-item"> <i class="fa fa-map-marker fa-2x"></i>
           <p>4321 California St,<br>
@@ -142,7 +66,7 @@
         </div>
       </div>
       <div class="clearfix"></div>
-    </div>
+    </div> 
     <div class="col-md-8 col-md-offset-2">
       <h3>Leave us a message</h3>
       <form name="sentMessage" id="contactForm" novalidate>
@@ -167,18 +91,32 @@
         <div id="success"></div>
         <button type="submit" class="btn btn-default">Send Message</button>
       </form>
+      -->
       <div class="social">
-        <h3>Follow us</h3>
+        <h3>Redes Sociais</h3>
         <ul>
-          <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-          <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-          <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-          <li><a href="#"><i class="fa fa-github"></i></a></li>
-          <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-          <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+        <?php 
+        $social_name = 'meu_menu_social';
+        $locations_social = get_nav_menu_locations();
+        $menu_id_social = $locations_social[ $social_name ] ;
+        $menu_social = wp_get_nav_menu_items(wp_get_nav_menu_object($menu_id_social)->name);
+
+        if (has_nav_menu( 'meu_menu_social' )) : ?>
+          <?php foreach ($menu_social as $menu): ?>
+              <li><a href="<?= $menu->url; ?>"><i class="fa fa-<?= strtolower($menu->post_name); ?>"></i></a></li>              
+          <?php endforeach ?>              
+        <?php endif; ?>  
         </ul>
       </div>
+
     </div>
   </div>
-</div>
+</div>  
+<?php
+    endif;
+    $count ++;
+  endwhile;
+endif;
+
+ ?>
 <?php get_footer(); ?>
