@@ -42,14 +42,20 @@
     </div>
     <div class="row">
       <div class="portfolio-items">
-        <?php $portfolio = render_post_type('post_portfolio');        
+        <?php $portfolio = render_post_type('post_portfolio');
         if($portfolio->have_posts()) :
           $count = 0;
             while ($portfolio->have_posts()) : $portfolio->the_post();                           
               $categorias = get_custom_category( $post->ID, 'ks_potfolio'); 
-              $port_filtro = $portfolio->posts[$count]->post_name;?>
+              $port_filtro = $portfolio->posts[$count]->post_name;
 
-        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 <?= $categorias ?>" >
+              $downloads[$count][$count] = $post->ID; 
+              $count_port = "port_filtro-" . $count;
+              $downloads[$count][$count_port] = $port_filtro;
+
+              ?>
+
+        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 <?= $categorias ?>" >
           <div class="portfolio-item" data-filter=".<?= $port_filtro;?>">
             <div class="hover-bg">                
               <div class="hover-text">
@@ -60,26 +66,35 @@
             </div>
           </div>
         </div>
+
         <?php
           $count ++;
             endwhile;
             endif;
         ?>
-        <?php $downloads = get_post_meta($post->ID, 'post_portfolio', true);
+        <?php 
+        
         $count = 0;
-        foreach ($downloads as $key) : ?>
-        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 <?= $port_filtro;?>">
-          <div style="display: none;" class="portfolio-sub-item">
-            <div class="hover-bg">
-                <a data-fancybox="<?= $port_filtro;?>" data-caption="Aqui pode vir um texto" href="<?= $key;?>" title="Project description" rel="prettyPhoto">
-                  <img src="<?= $key; ?>" class="img-responsive img-thumbnail"> 
-                </a>
-            </div>
-          </div>
-        </div>
-      <?php $count ++; ?> 
-      <? endforeach ?>
-
+        
+          foreach ($downloads as $valores) :
+            $downloads_images = get_post_meta($valores[$count], 'post_portfolio', true);
+            if (isset($downloads_images)) :
+              
+              foreach ($downloads_images as $key) : ?>
+              <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 <?= $valores["port_filtro-$count"];?>">
+                <div style="display: none;" class="portfolio-sub-item">
+                  <div class="hover-bg">
+                      <a data-fancybox="<?= $valores["port_filtro-$count"];?>" data-caption="" href="<?= $key;?>" title="Project description" rel="prettyPhoto">
+                        <img src="<?= $key; ?>" class="img-responsive img-thumbnail"> 
+                      </a>
+                  </div>
+                </div>
+              </div>          
+              <? endforeach ?>
+            <? endif; ?>
+            <?php $count ++; ?> 
+          <? endforeach ?>
+     
       </div>
     </div>
   </div>

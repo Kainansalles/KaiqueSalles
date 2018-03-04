@@ -10,7 +10,7 @@
           <h1><?= bloginfo('name'); ?></h1>
           <!-- <span class="brand-heading">Modus</span> -->
           <div class="intro-text"><?= bloginfo('description'); ?></div>
-          <a href="#sobre" class="btn btn-default page-scroll">Conheça mais</a></div>
+          <a href="#portfolio" class="btn btn-default page-scroll">Ver Portifólio</a></div>
       </div>
     </div>
   </div>
@@ -45,9 +45,11 @@ if($paginas->have_posts()) :
     <div class="section-title center">
       <h2><?= $paginas->posts[$count]->post_title; ?></h2>
       <hr>
-      <?php the_content(); ?>
+      <p>Precisa de um orçamento?</p>
     </div>
-    <!-- <div class="col-md-8 col-md-offset-2">
+    <?php the_content(); ?> 
+    
+      <!--<div class="col-md-8 col-md-offset-2">
       <div class="col-md-4">
         <div class="contact-item"> <i class="fa fa-map-marker fa-2x"></i>
           <p>4321 California St,<br>
@@ -67,6 +69,7 @@ if($paginas->have_posts()) :
       </div>
       <div class="clearfix"></div>
     </div> 
+
     <div class="col-md-8 col-md-offset-2">
       <h3>Leave us a message</h3>
       <form name="sentMessage" id="contactForm" novalidate>

@@ -7,6 +7,7 @@
     <div class="section-title center">
       <h2>Serviços</h2>
       <hr>
+      <p>Tudo que você deseja em um só lugar!</p>
     </div>
     <div class="space"></div>
     <div class="row">
