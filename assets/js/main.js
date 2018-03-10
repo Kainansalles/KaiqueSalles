@@ -108,14 +108,14 @@ function main() {
     // });
 
   // jQuery Parallax
-  function initParallax() {
+  /*function initParallax() {
     $('#intro').parallax("100%", 0.3);
     $('#services').parallax("100%", 0.3);
     $('#sobreimg').parallax("100%", 0.3);
     $('#testimonials').parallax("100%", 0.1);
 
   }
-  initParallax();
+  initParallax(); */
 
   	// Pretty Photo
 	//$("a[rel^='prettyPhoto']").prettyPhoto({

@@ -1,17 +1,14 @@
 <?php
-
 // Incluindo nosso arquivo customizer
 require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/meta-boxes.php';
 
 remove_action('wp_head','wp_generator');
-
 add_filter('show_admin_bar', '__return_false'); // ocultar barra de alterações no site
 
 function carrega_scripts(){
 	// Enfileirando Bootstrap
 	wp_enqueue_style( 'google_web_fonts', 'https://fonts.googleapis.com/css?family=Roboto:300,400' );
-
 	wp_enqueue_style( 'bootstrap', get_template_directory_uri() . "/assets/css/bootstrap.min.css", array(), '3.3.7', 'all');
 	wp_enqueue_script( 'bootstrap', get_template_directory_uri() . "/assets/js/bootstrap.min.js", array('jquery'), null, true);
 	// Enfileirando estilos e scripts próprios
@@ -19,22 +16,29 @@ function carrega_scripts(){
 	wp_enqueue_style( 'prettyPhoto', get_template_directory_uri() . '/assets/css/prettyPhoto.css', array(), '1.0', 'all');
 	wp_enqueue_style( 'jquery.fancybox', get_template_directory_uri() . '/assets/css/jquery.fancybox.css', array(), '1.0', 'all');	
 	wp_enqueue_style( 'font-awesome', get_template_directory_uri() . '/assets/fonts/font-awesome/css/font-awesome.css', array(), '1.0', 'all');
-
 	wp_enqueue_script( 'jquery.1.11.1', get_template_directory_uri(). '/assets/js/jquery.1.11.1.js', array(), null, true);
-
 	wp_enqueue_script( 'jquery.isotope', get_template_directory_uri(). '/assets/js/jquery.isotope.js',array(), null, true);
 	
 	wp_enqueue_script( 'kaiquesalles', get_template_directory_uri(). '/assets/js/kaiquesalles.js',array(), null, true);
-
 	wp_enqueue_script( 'main', get_template_directory_uri(). '/assets/js/main.js',array(), null, true);
-
 	wp_enqueue_script( 'jquery.fancybox', get_template_directory_uri(). '/assets/js/jquery.fancybox.js',array(), null, true);
-
 }
 add_action( 'wp_enqueue_scripts', 'carrega_scripts' );
 
 function carregar_script_admin(){
-	wp_enqueue_script( 'template', get_template_directory_uri(). '/assets/js/template.js',array(), null, true);
+
+    wp_enqueue_style('select2', get_template_directory_uri() . '/assets/css/select2.min.css');
+    wp_enqueue_style('admin-style', get_template_directory_uri() .'/assets/css/admin.css');
+
+    wp_enqueue_script('select2', get_template_directory_uri() . '/assets/js/select2.min.js', array('jquery'), '1.0.0', true);
+    wp_register_script('jquery-datetimepicker', get_template_directory_uri() . '/assets/js/jquery.datetimepicker.full.min.js', array(), '1.0.0', true);
+
+    wp_register_script('ksadmin-script', get_template_directory_uri() . '/assets/js/ks_admin.js', array('jquery'), '1.0.0', true);
+
+    wp_localize_script('ksadmin-script', 'inFundingCfg', array('siteUrl' => site_url(), 'adminUrl' => admin_url(), 'ajaxUrl' => admin_url('admin-ajax.php')));
+    wp_enqueue_media();
+    wp_enqueue_script('jquery-ui-datepicker');
+    wp_enqueue_script('ksadmin-script');
 }
 add_action('admin_enqueue_scripts', 'carregar_script_admin');
 
@@ -45,7 +49,6 @@ register_nav_menus(
 		'meu_menu_social'	 => 'Redes sociais'
 	)
 );
-
 // Adicionando suporte ao tema
 $defaults = array(
     'default-image' => '',
@@ -89,33 +92,25 @@ $defaults = array(
 );
 add_theme_support( 'custom-background', $defaults );
 add_theme_support( 'automatic-feed-links' );
-//add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption' ) );
+
 add_post_type_support( 'page', 'post-formats' );
-
-
 function render_menu(){
 	$menu = 'meu_menu_principal';
 	$locations_menu = get_nav_menu_locations();
 	$menu_id = $locations_menu[ $menu ] ;
 	$menu = wp_get_nav_menu_items(wp_get_nav_menu_object($menu_id)->name);
-
 	return $menu;
 }
-
 function render_post_type($post_type){
 	$args = array(
     'post_type'      => $post_type,
     'posts_per_page' => -1
   	);	
 	$render_post = new WP_Query($args);
-
 	return $render_post;
 }
-
-
 // Register Custom Post Type Serviços
 function post_servicos() {
-
 	$labels = array(
 		'name'                  => _x( 'Serviços', 'Post Type General Name', 'text_domain' ),
 		'singular_name'         => _x( 'Serviços', 'Post Type Singular Name', 'text_domain' ),
@@ -166,10 +161,8 @@ function post_servicos() {
 		'capability_type'       => 'post',
 	);
 	register_post_type( 'post_servicos', $args );
-
 }
 add_action( 'init', 'post_servicos', 0 );
-
 function register_category_servicos() {
 		$labels = array(
 				'name' => _x('Categorias', 'Categorias', "text_domain"),
@@ -184,7 +177,6 @@ function register_category_servicos() {
 				'new_item_name' => __('Novo Categoria', "text_domain"),
 				'menu_name' => __('Categorias', "text_domain")
 		);
-
 		$args = array(
 				'hierarchical' => true, // true =  Category
 				'labels' => $labels,
@@ -194,14 +186,10 @@ function register_category_servicos() {
 				'query_var' => true,
 				'rewrite' => array('slug' => 'servicos')
 		);
-
 		register_taxonomy('ks_servicos', array('post_servicos'), $args);
 }
-
 add_action('init', 'register_category_servicos');
-
 function post_portfolio() {
-
 	$labels = array(
 		'name'                  => _x( 'Portifólio', 'Post Type General Name', 'text_domain' ),
 		'singular_name'         => _x( 'Portifólio', 'Post Type Singular Name', 'text_domain' ),
@@ -252,10 +240,8 @@ function post_portfolio() {
 		'capability_type'       => 'post',
 	);
 	register_post_type( 'post_portfolio', $args );
-
 }
 add_action( 'init', 'post_portfolio', 0 );
-
 function register_category_portfolio() {
 		$labels = array(
 				'name' => _x('Categorias', 'Categorias', "text_domain"),
@@ -270,7 +256,6 @@ function register_category_portfolio() {
 				'new_item_name' => __('Novo Categoria', "text_domain"),
 				'menu_name' => __('Categorias', "text_domain")
 		);
-
 		$args = array(
 				'hierarchical' => true, // true =  Category
 				'labels' => $labels,
@@ -280,13 +265,9 @@ function register_category_portfolio() {
 				'query_var' => true,
 				'rewrite' => array('slug' => 'porfolio')
 		);
-
 		register_taxonomy('ks_potfolio', array('post_portfolio'), $args);
 }
-
 add_action('init', 'register_category_portfolio');
-
-
 function get_custom_category( $id, $taxonomy, $before = '', $sep = '', $after = '' ) {
     $terms = get_the_terms( $id, $taxonomy );
  

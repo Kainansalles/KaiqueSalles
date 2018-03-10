@@ -75,21 +75,27 @@
         <?php 
         
         $count = 0;
-        
-          foreach ($downloads as $valores) :
-            $downloads_images = get_post_meta($valores[$count], 'post_portfolio', true);
-            if (isset($downloads_images)) :
+
+          foreach ($downloads as $valores) :            
+            $value = get_post_meta($valores[$count], 'post_portfolio', true);            
+            $image_gallery = unserialize($value);
+            
+            if ($image_gallery) :
               
-              foreach ($downloads_images as $key) : ?>
+              foreach ($image_gallery as $item) : 
+                $img = wp_get_attachment_image_src($item,'full'); 
+                $img_port = (string) ($img[0]); ?>
+              
               <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 <?= $valores["port_filtro-$count"];?>">
                 <div style="display: none;" class="portfolio-sub-item">
                   <div class="hover-bg">
-                      <a data-fancybox="<?= $valores["port_filtro-$count"];?>" data-caption="" href="<?= $key;?>" title="Project description" rel="prettyPhoto">
-                        <img src="<?= $key; ?>" class="img-responsive img-thumbnail"> 
+                      <a data-fancybox="<?= $valores["port_filtro-$count"];?>" data-caption="" href="<?= $img_port; ?>" title="Project description" rel="prettyPhoto">
+                        <img src="<?= $img_port; ?>" class="img-responsive img-thumbnail"> 
                       </a>
                   </div>
                 </div>
-              </div>          
+              </div>
+
               <? endforeach ?>
             <? endif; ?>
             <?php $count ++; ?> 
