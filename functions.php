@@ -33,7 +33,7 @@ function carregar_script_admin(){
     wp_enqueue_script('select2', get_template_directory_uri() . '/assets/js/select2.min.js', array('jquery'), '1.0.0', true);
     wp_register_script('jquery-datetimepicker', get_template_directory_uri() . '/assets/js/jquery.datetimepicker.full.min.js', array(), '1.0.0', true);
 
-    wp_register_script('ksadmin-script', get_template_directory_uri() . '/assets/js/ks_admin.js', array('jquery'), '1.0.0', true);
+    wp_register_script('ksadmin-script', get_template_directory_uri() . '/assets/js/ks_admin.js', array('jquery'), '1.1.0', true);
 
     wp_localize_script('ksadmin-script', 'inFundingCfg', array('siteUrl' => site_url(), 'adminUrl' => admin_url(), 'ajaxUrl' => admin_url('admin-ajax.php')));
     wp_enqueue_media();
