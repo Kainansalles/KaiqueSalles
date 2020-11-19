@@ -28,7 +28,7 @@
         ;
         loadTabContent();
 
-        $('.iw-tab-item-content .iw-accordion-header').live('click', function () {
+        $('.iw-tab-item-content .iw-accordion-header').on('click', function () {
             var itemClick = $(this),
                     accordion_list = accordion_day.find('.iw-accordion-item'),
                     item_target = itemClick.parent();
@@ -127,11 +127,11 @@
 
         //Remove image from list
         //Remove image from list gallery
-        $('.list-image-gallery .action-overlay .remove-image').live('click', function () {
+        $('.list-image-gallery .action-overlay .remove-image').on('click', function () {
             $(this).parents('.iw-image-item').hide(200).remove();
         });
 
-        $('.iwe-field-manager .field-label').live('change', function () {
+        $('.iwe-field-manager .field-label').on('change', function () {
             var val = $(this).val();
             if (val === '') {
                 $(this).addClass('form-error');
@@ -141,7 +141,7 @@
             saveSettingFormValid();
         }).trigger('change');
 
-        $('.iwe-field-manager .field-name').live('input', function () {
+        $('.iwe-field-manager .field-name').on('input', function () {
             var val = $(this).val();
             if (val === '') {
                 $(this).addClass('form-error');
@@ -155,7 +155,7 @@
             saveSettingFormValid();
         }).trigger('input');
 
-        $('.iwe-field-manager .select-field-type').live('change', function () {
+        $('.iwe-field-manager .select-field-type').on('change', function () {
             var val = $(this).val(), row = $(this).parents('tr');
             if (val === 'select') {
                 row.find('.default-value').html('<select name="inf_settings[register_form_fields][default_value][]"></select>');
@@ -182,7 +182,7 @@
             saveSettingFormValid();
         });
 
-        $('.iwe-field-manager .field-values textarea').live('input', function () {
+        $('.iwe-field-manager .field-values textarea').on('input', function () {
             var item_target = $(this), val = item_target.val().trim('\n'), line = val.split('\n'), options = '';
             for (var i = 0; i < line.length; i++) {
                 var option = line[i].split('|');
@@ -198,7 +198,7 @@
             saveSettingFormValid();
         });
 
-        $('.iwe-field-manager .field-values .custom-regex-patten').live('input', function () {
+        $('.iwe-field-manager .field-values .custom-regex-patten').on('input', function () {
             var item_target = $(this),
                     val = item_target.val(),
                     re = new RegExp(val, "i"),
@@ -212,7 +212,7 @@
             saveSettingFormValid();
         });
 
-        $('.iwe-field-manager .default-value .custom-regex-val').live('input', function () {
+        $('.iwe-field-manager .default-value .custom-regex-val').on('input', function () {
             var item_target = $(this),
                     val = item_target.val(),
                     re = new RegExp(item_target.attr('pattern'), "i");
@@ -261,12 +261,12 @@
             saveSettingFormValid();
         });
 
-        $('.button.remove_field').live('click', function () {
+        $('.button.remove_field').on('click', function () {
             $(this).parents('tr').remove();
             saveSettingFormValid();
         });
 
-        $('input.show_on_list, input.require_field').live('change', function () {
+        $('input.show_on_list, input.require_field').on('change', function () {
             var val = $(this).is(':checked');
             if (val) {
                 $(this).parent().find('.iwe_field_val').val(1);
